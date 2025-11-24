@@ -33,9 +33,10 @@ Plataforma web (PHP + MySQL + Next.js) para registrar, acompanhar e analisar rec
 ## Frontend (local)
 1. Copie `frontend/.env.example` para `frontend/.env.local` e ajuste:
    ```
-   NEXT_PUBLIC_API_URL=http://localhost:8000
+   NEXT_PUBLIC_API_BASE=http://localhost:8000
+   NEXT_PUBLIC_ADMIN_OWNER_EMAIL=felippe@luembalagens.com
    ```
-   (Quando publicar, troque para a URL pública do backend.)
+   (Quando publicar, troque `NEXT_PUBLIC_API_BASE` para a URL pública do backend.)
 2. Instale e rode:
    ```
    cd frontend
@@ -45,7 +46,7 @@ Plataforma web (PHP + MySQL + Next.js) para registrar, acompanhar e analisar rec
    App em `http://localhost:3000`.
 
 ## Variáveis de ambiente importantes
-- Frontend: `NEXT_PUBLIC_API_URL` (URL pública do backend PHP).
+- Frontend: `NEXT_PUBLIC_API_BASE` (URL pública do backend PHP), `NEXT_PUBLIC_ADMIN_OWNER_EMAIL` (email do dono/admin).
 - Backend: `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, etc. (ver `backend/.env.example`).
 
 ## GitHub – como versionar
@@ -69,29 +70,40 @@ Para puxar alterações:
 git pull
 ```
 
-## Vercel – deploy do frontend
+## Vercel – deploy do frontend (sem rootDirectory no vercel.json)
 1. Conecte a Vercel ao seu GitHub e selecione este repositório.
-2. Configure o diretório raiz como `frontend`.
+2. No dashboard da Vercel, em “Root Directory”, escolha manualmente a pasta `frontend` (NÃO usar `rootDirectory` no `vercel.json`).
 3. Build command: `npm run build`
 4. Output directory: `.next`
 5. Install command: `npm install` (default).
 6. Variáveis de ambiente (Project Settings → Environment Variables):
-   - `NEXT_PUBLIC_API_URL` → URL pública do backend PHP (Napoleon Host).
-7. Cada `git push` na branch conectada dispara deploy automático. Pull Requests geram deploy previews.
+   - `NEXT_PUBLIC_API_BASE` → URL pública do backend PHP (Napoleon Host).
+   - `NEXT_PUBLIC_ADMIN_OWNER_EMAIL` → email do dono/admin.
+7. Deploy automático a cada `git push`; Pull Requests geram deploy previews.
 
-Arquivo de configuração: `vercel.json` já define root (`frontend`), build e output.
+### Sobre o `vercel.json`
+- Não use `rootDirectory` no `vercel.json` (a Vercel rejeita). Configure a root (`frontend`) só via dashboard.
+- Arquivo mínimo válido no **raiz** do repositório:
+  ```json
+  {
+    "version": 2
+  }
+  ```
+  (Opcionalmente, você pode colocar o mesmo `vercel.json` dentro de `frontend/` com apenas `{ "version": 2 }`. Em ambos os casos, a seleção do diretório é feita na Vercel.)
+### Como a Vercel detecta o Next.js
+- A Vercel identifica o Next.js automaticamente ao apontar a raiz para `frontend`. Não precisa declarar framework no JSON.
 
 ## Fluxo de publicação
 - **Frontend (Vercel):** `git push` → Vercel builda `frontend/` e publica.
 - **Backend (Napoleon Host ou outro):** faça deploy manual via FTP/SSH/git; mantenha `.env` fora do versionamento.
-- O frontend consome a API via `NEXT_PUBLIC_API_URL`.
+- O frontend consome a API via `NEXT_PUBLIC_API_BASE`.
 
 ## Comandos úteis (pt-BR)
 - Rodar backend (dev): `php -S localhost:8000 -t public public/index.php`
 - Rodar frontend (dev): `npm run dev` (dentro de `frontend`)
 - Build frontend local: `npm run build` (dentro de `frontend`)
 - Git push: `git add . && git commit -m "mensagem" && git push`
-- Ajustar variável na Vercel: Painel do projeto → Settings → Environment Variables → adicionar/editar `NEXT_PUBLIC_API_URL`.
+- Ajustar variável na Vercel: Painel do projeto → Settings → Environment Variables → adicionar/editar `NEXT_PUBLIC_API_BASE` e `NEXT_PUBLIC_ADMIN_OWNER_EMAIL`.
 
 ## Observações
 - Nunca suba arquivos sensíveis (`.env`, `vendor`, `node_modules`) para o Git.
