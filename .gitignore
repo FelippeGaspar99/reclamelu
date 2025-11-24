@@ -1,36 +1,50 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Ignorar dependências e caches
 /node_modules
+/vendor
 /.pnp
 .pnp.js
-
-# testing
-/coverage
-
-# next.js
 /.next/
 /out/
-
-# production
 /build
+/.vercel
+/.idea
+/.vscode
+.fleet
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs e debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
+*.cache
 
-# local env files
-.env*.local
+# Ambiente
 .env
+.env.local
+.env.*.local
+/backend/.env
 
-# vercel
-.vercel
+# Backups/DB temporários
+*.sqlite
+*.db
 
-# typescript
-*.tsbuildinfo
+# Cobertura
+/coverage
+.phpunit.result.cache
+
+# Lockfiles (ajuste se quiser versionar)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Arquivos específicos do projeto
+/backend/vendor/
+/frontend/node_modules/
+/frontend/.next/
+/frontend/.env.local
+
+# Miscelânea
+.DS_Store
+*.pem
 next-env.d.ts

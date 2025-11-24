@@ -1,0 +1,99 @@
+# ReclameLU – Sistema interno de reclamações
+
+Plataforma web (PHP + MySQL + Next.js) para registrar, acompanhar e analisar reclamações internas.
+
+## Estrutura do projeto
+- `backend/` – API PHP 8+ (rotas REST, JWT, migrations, seeds). **Não é hospedado na Vercel.**
+- `frontend/` – Next.js (App Router) + Tailwind. **Será hospedado na Vercel.**
+- `backend/database/` – migrations SQL e seeds.
+
+## Requisitos locais
+- PHP 8.1+ com extensão PDO MySQL
+- MySQL 8+
+- Node 18+ / npm
+- Git instalado
+
+## Backend (local ou servidor externo)
+1. Copie `backend/.env.example` para `backend/.env` e ajuste suas credenciais.
+2. Rode migrations e seeds:
+   ```
+   php backend/scripts/run_migrations.php
+   php backend/scripts/run_seeders.php
+   ```
+   (Cria usuário admin `admin@company.com` / `admin123`.)
+3. Suba o servidor PHP em dev:
+   ```
+   cd backend
+   php -S localhost:8000 -t public public/index.php
+   ```
+   A API ficará em `http://localhost:8000/api/*`.
+
+> Hospedagem externa (ex.: Napoleon Host): aponte o DocumentRoot para `backend/public`, configure o PHP 8 + MySQL, suba o `.env` com `DB_*` e `JWT_SECRET`.
+
+## Frontend (local)
+1. Copie `frontend/.env.example` para `frontend/.env.local` e ajuste:
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:8000
+   ```
+   (Quando publicar, troque para a URL pública do backend.)
+2. Instale e rode:
+   ```
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   App em `http://localhost:3000`.
+
+## Variáveis de ambiente importantes
+- Frontend: `NEXT_PUBLIC_API_URL` (URL pública do backend PHP).
+- Backend: `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, etc. (ver `backend/.env.example`).
+
+## GitHub – como versionar
+No diretório raiz do projeto:
+```
+git init
+git branch -M main
+git remote add origin git@github.com:SEU_USUARIO/SEU_REPO.git
+git add .
+git commit -m "chore: inicializa projeto ReclameLU"
+git push -u origin main
+```
+Para atualizar:
+```
+git add .
+git commit -m "sua mensagem"
+git push
+```
+Para puxar alterações:
+```
+git pull
+```
+
+## Vercel – deploy do frontend
+1. Conecte a Vercel ao seu GitHub e selecione este repositório.
+2. Configure o diretório raiz como `frontend`.
+3. Build command: `npm run build`
+4. Output directory: `.next`
+5. Install command: `npm install` (default).
+6. Variáveis de ambiente (Project Settings → Environment Variables):
+   - `NEXT_PUBLIC_API_URL` → URL pública do backend PHP (Napoleon Host).
+7. Cada `git push` na branch conectada dispara deploy automático. Pull Requests geram deploy previews.
+
+Arquivo de configuração: `vercel.json` já define root (`frontend`), build e output.
+
+## Fluxo de publicação
+- **Frontend (Vercel):** `git push` → Vercel builda `frontend/` e publica.
+- **Backend (Napoleon Host ou outro):** faça deploy manual via FTP/SSH/git; mantenha `.env` fora do versionamento.
+- O frontend consome a API via `NEXT_PUBLIC_API_URL`.
+
+## Comandos úteis (pt-BR)
+- Rodar backend (dev): `php -S localhost:8000 -t public public/index.php`
+- Rodar frontend (dev): `npm run dev` (dentro de `frontend`)
+- Build frontend local: `npm run build` (dentro de `frontend`)
+- Git push: `git add . && git commit -m "mensagem" && git push`
+- Ajustar variável na Vercel: Painel do projeto → Settings → Environment Variables → adicionar/editar `NEXT_PUBLIC_API_URL`.
+
+## Observações
+- Nunca suba arquivos sensíveis (`.env`, `vendor`, `node_modules`) para o Git.
+- O backend **não roda** na Vercel; hospede em servidor PHP 8 + MySQL e exponha a URL para o frontend.
+- Toda a interface do usuário permanece em português do Brasil.
