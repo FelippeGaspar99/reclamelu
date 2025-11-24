@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #0c111f;
@@ -9,13 +11,6 @@
   --accent: #22d3ee;
   --accent-2: #7c3aed;
   --radius: 12px;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--ink);
-  --font-sans: var(--font-manrope);
-  --font-heading: var(--font-grotesk);
 }
 
 * {
