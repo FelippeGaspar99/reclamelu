@@ -1,0 +1,11 @@
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=http://SEU_SERVIDOR
+
+DB_HOST=186.209.113.112
+DB_DATABASE=fgem9000_reclamelu
+DB_USERNAME=fgem9000_reclamelu
+DB_PASSWORD=fgem9000_reclamelu
+
+JWT_SECRET=troque_para_um_segredo_forte
+JWT_EXPIRES_MIN=1440

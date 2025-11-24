@@ -8,45 +8,39 @@ use App\Services\MetricsService;
 
 class MetricsController
 {
-    public static function global(): void
+    public static function daysGlobal(): void
     {
         require_auth();
-        $data = MetricsService::globalDaysWithoutComplaints();
-        json_response($data);
+        json_response(MetricsService::daysGlobal());
     }
 
-    public static function byStore(): void
+    public static function daysByStore(): void
     {
         require_auth();
-        $data = MetricsService::daysWithoutComplaintsByStore();
-        json_response(['data' => $data]);
+        json_response(['data' => MetricsService::daysByStore()]);
     }
 
-    public static function byType(): void
+    public static function daysByType(): void
     {
         require_auth();
-        $data = MetricsService::daysWithoutComplaintsByType();
-        json_response(['data' => $data]);
+        json_response(['data' => MetricsService::daysByType()]);
     }
 
     public static function recordGlobal(): void
     {
         require_auth();
-        $data = MetricsService::globalRecord();
-        json_response($data);
+        json_response(MetricsService::recordGlobal());
     }
 
     public static function recordByStore(): void
     {
         require_auth();
-        $data = MetricsService::recordByStore();
-        json_response(['data' => $data]);
+        json_response(['data' => MetricsService::recordByStore()]);
     }
 
     public static function recordByType(): void
     {
         require_auth();
-        $data = MetricsService::recordByType();
-        json_response(['data' => $data]);
+        json_response(['data' => MetricsService::recordByType()]);
     }
 }

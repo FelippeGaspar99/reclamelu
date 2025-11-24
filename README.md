@@ -33,10 +33,10 @@ Plataforma web (PHP + MySQL + Next.js) para registrar, acompanhar e analisar rec
 ## Frontend (local)
 1. Copie `frontend/.env.example` para `frontend/.env.local` e ajuste:
    ```
-   NEXT_PUBLIC_API_BASE=http://localhost:8000
+   NEXT_PUBLIC_API_BASE=http://localhost:8001
    NEXT_PUBLIC_ADMIN_OWNER_EMAIL=felippe@luembalagens.com
    ```
-   (Quando publicar, troque `NEXT_PUBLIC_API_BASE` para a URL pública do backend.)
+   (Quando publicar, use a URL pública do backend, ex.: `https://SEU_DOMINIO/reclamelu-api`.)
 2. Instale e rode:
    ```
    cd frontend
