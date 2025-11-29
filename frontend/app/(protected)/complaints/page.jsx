@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import StatusBadge from "../../../components/StatusBadge";
 import PriorityBadge from "../../../components/PriorityBadge";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch } from "@/lib/api";
 import { formatDate } from "../../../lib/format";
 import { priorityLabel, statusLabel } from "../../../lib/i18n";
 
