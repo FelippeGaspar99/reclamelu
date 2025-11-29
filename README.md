@@ -49,6 +49,17 @@ Plataforma web (PHP + MySQL + Next.js) para registrar, acompanhar e analisar rec
 - Frontend: `NEXT_PUBLIC_API_BASE` (URL pública do backend PHP), `NEXT_PUBLIC_ADMIN_OWNER_EMAIL` (email do dono/admin).
 - Backend: `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, etc. (ver `backend/.env.example`).
 
+## Comunicação frontend → backend
+Defina `NEXT_PUBLIC_API_BASE` para a URL pública da API (ex.: `https://reclamelu.fgembalagens.top/api`). Exemplo de chamada:
+```ts
+await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/auth/login`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email, password })
+});
+```
+Em desenvolvimento local, use `http://localhost:8001` se a API estiver rodando nessa porta.
+
 ## GitHub – como versionar
 No diretório raiz do projeto:
 ```
